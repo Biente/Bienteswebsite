@@ -24,6 +24,31 @@ namespace Bienteswebsite.Controllers
             return View();
         }
 
+        [Route("prijzen")]
+        public IActionResult Prijzen()
+        {
+            return View();
+        }
+
+        [Route("data")]
+        public IActionResult Data()
+        {
+            return View();
+        }
+
+        [Route("regels")]
+        public IActionResult Regels()
+        {
+            return View();
+        }
+
+        [Route("locaties")]
+        public IActionResult Locaties()
+        {
+            return View();
+        }
+
+
         public IActionResult Privacy()
         {
             return View();
