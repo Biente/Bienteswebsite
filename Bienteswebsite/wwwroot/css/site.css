@@ -1,5 +1,12 @@
-﻿h1 {
-    background-color: lightcyan;
+﻿header {
+    position: absolute;
+    width: 100%;
+    height: 115px;
+    margin: auto;
+    background: url("https://f.eu1.jwwb.nl/public/p/q/q/temp-coxfmcjuyaezlorwuvbx/f9baaf809f6a435595b09c9f5c1d136e.jpeg");
+}
+
+h1 {
     text-align: center;
 }
 
@@ -22,5 +29,6 @@ a {
 }
 
 h2 {
+    position: fixed;
     background-color: pink;
 }
