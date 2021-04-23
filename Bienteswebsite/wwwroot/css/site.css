@@ -1,1 +1,26 @@
-﻿
+﻿h1 {
+    background-color: lightcyan;
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+    overflow: hidden;
+}
+
+li {
+    float: left;
+    background-color: lightcyan;
+    border-right: solid 2px #fff
+}
+
+a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 8px;
+}
+
+h2 {
+    background-color: pink;
+}
