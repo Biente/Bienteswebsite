@@ -1,6 +1,14 @@
-﻿@{
+﻿@model List<String>
+@{
     ViewData["Title"] = "Home Page";
 }
+<div class="text-center">
+    <h1>alle namen</h1>
+    @foreach(string naam in Model)
+    { 
+        <p>@naam</p> 
+    }
+</div>
 <head>
     <link rel="stylesheet" href="/css/site.css">
 </head>
@@ -11,7 +19,4 @@
        
 </div>
 
-<div class="text-center">
-    
 
-</div>
