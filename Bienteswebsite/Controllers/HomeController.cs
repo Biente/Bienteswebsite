@@ -65,7 +65,7 @@ namespace Bienteswebsite.Controllers
                 conn.Open();
 
                 // SQL query die we willen uitvoeren
-                MySqlCommand cmd = new MySqlCommand("select * from product", conn);
+                MySqlCommand cmd = new MySqlCommand("select * from festival", conn);
 
                 // resultaat van de query lezen
                 using (var reader = cmd.ExecuteReader())
