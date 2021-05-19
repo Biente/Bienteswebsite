@@ -1,4 +1,4 @@
-﻿#header {
+﻿header {
     background: url(https://thuishaven.nl/wp-content/uploads/2020/05/Thuishaven_shelter.jpg);
 }
 
@@ -56,4 +56,8 @@ h2 {
 
 p {
     position: absolute;
+}
+
+h2 {
+    text-align: left;
 }
