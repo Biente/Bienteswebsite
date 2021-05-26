@@ -1,5 +1,5 @@
 ﻿header {
-    background: antiquewhite;
+    background-image: url(https://i-mom.unimedias.fr/2020/09/16/funko_pop_figurines_soignants_covid19_4_1.png?auto=format%2Ccompress&crop=faces&cs=tinysrgb&fit=max&w=1050);
 }
 
     #header ul {
@@ -62,8 +62,8 @@ h2 {
     text-align: left;
 }
 
-div.footer {
-    
+footer {
+    background-color: aqua;
 }
 
 input[type=text] {

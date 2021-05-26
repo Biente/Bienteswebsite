@@ -44,11 +44,6 @@ namespace Bienteswebsite.Controllers
             return View();
         }
 
-       [Route("homepage")]
-        public IActionResult Homepage()
-        {
-            return View();
-        }
         [Route("contact")]
         public IActionResult Contact()
         {
