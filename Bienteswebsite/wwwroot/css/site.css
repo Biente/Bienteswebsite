@@ -72,4 +72,11 @@ input[type=texxt]focus {
 }
 
 
+.contactForm label{
+  display:block;
+}
 
+
+.contactForm textarea {
+  width: 100%;
+}
