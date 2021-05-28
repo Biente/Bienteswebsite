@@ -53,6 +53,21 @@ namespace Bienteswebsite.Controllers
             return View();
         }
 
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Contact(string firstname, string lastname, string email, string subject)
+        {
+            ViewData["voornaam"] = voornaam;
+            ViewData["achternaam"] = achternaam;
+
+            return View();
+        }
+  
+         
         public IActionResult Index()
         {
             var names = GetNames();
