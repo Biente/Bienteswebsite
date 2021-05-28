@@ -67,10 +67,22 @@ input[type=text] {
     box-sizing: border-box;
 }
 
-input[type=texxt]focus {
+input[type=text]focus {
     border-color: black;
 }
 
+.container {
+    box-sizing: block;
+    padding: 0 16px;
+}
+
+
+.column {
+    float: left;
+    width: 33.3%;
+    margin-bottom: 16px;
+    padding: 0 8px;
+}
 
 .contactForm label{
   display:block;
