@@ -50,18 +50,10 @@ a {
     padding: 8px;
 }
 
-h2 {
-    position: fixed;
-    width: 100%;
-}
-
 p {
     position: absolute;
 }
 
-h2 {
-    text-align: left;
-}
 
 footer {
     background-color: aqua;
