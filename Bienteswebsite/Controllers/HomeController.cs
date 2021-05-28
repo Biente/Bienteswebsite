@@ -20,8 +20,8 @@ namespace Bienteswebsite.Controllers
             _logger = logger;
         }
 
-        [Route("data")]
-        public IActionResult Data()
+        [Route("aboutus")]
+        public IActionResult Aboutus()
         {
             return View();
         }
@@ -32,14 +32,14 @@ namespace Bienteswebsite.Controllers
             return View();
         }
 
-        [Route("prijzen")]
-        public IActionResult Prijzen()
+        [Route("faq")]
+        public IActionResult FAQ()
         {
             return View();
         }
 
-        [Route("locaties")]
-        public IActionResult Locaties()
+        [Route("info")]
+        public IActionResult Info()
         {
             return View();
         }
