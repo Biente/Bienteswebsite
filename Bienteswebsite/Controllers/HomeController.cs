@@ -45,8 +45,11 @@ namespace Bienteswebsite.Controllers
         }
 
         [Route("contact")]
-        public IActionResult Contact()
+        public IActionResult Contact(string firstname, string lastname, string email, string subject)
         {
+            ViewData["voornaam"] = voornaam;
+            ViewData["achternaam"] = achternaam;
+            
             return View();
         }
 
