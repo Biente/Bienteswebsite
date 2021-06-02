@@ -58,6 +58,7 @@ namespace Bienteswebsite.Controllers
             return View();
         }
 
+        [Route("succes")]
         public IActionResult Succes()
         {
             return View();
