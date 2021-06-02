@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using Bienteswebsite.Controllers.Database;
 
 namespace Bienteswebsite.Controllers
 {
@@ -47,25 +48,12 @@ namespace Bienteswebsite.Controllers
         [Route("contact")]
         public IActionResult Contact(string firstname, string lastname, string email, string subject)
         {
-            ViewData["voornaam"] = voornaam;
-            ViewData["achternaam"] = achternaam;
+            //ViewData["voornaam"] = voornaam;
+            //ViewData["achternaam"] = achternaam;
             
             return View();
         }
 
-        public IActionResult Contact()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Contact(string firstname, string lastname, string email, string subject)
-        {
-            ViewData["firstname"] = Person.firstname;
-            ViewData["lastname"] = Person.lastname;
-
-            return View();
-        }
   
          
         public IActionResult Index()
@@ -110,6 +98,43 @@ namespace Bienteswebsite.Controllers
             return names;
         }
 
+        public List<Festival> GetProducts()
+        {
+            // stel in waar de database gevonden kan worden
+            string connectionString = "Server=172.16.160.21;Port=3306;Database=110417;Uid=110417;Pwd=inf2021sql;";
+
+            // maak een lege lijst waar we de namen in gaan opslaan
+            List<Festival> festivals = new List<Festival>();
+
+            // verbinding maken met de database
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                // verbinding openen
+                conn.Open();
+
+                // SQL query die we willen uitvoeren
+                MySqlCommand cmd = new MySqlCommand("select * from festival", conn);
+
+                // resultaat van de query lezen
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // elke keer een regel (of eigenlijk: database rij) lezen
+                    while (reader.Read())
+                    {
+                        // selecteer de kolommen die je wil lezen. In dit geval kiezen we de kolom "naam"
+                        //string festival = reader["festival"].ToString();
+                        Festival f = new Festival();
+                        //f.Id = 
+
+                        // voeg de naam toe aan de lijst met namen
+                        festivals.Add(f);
+                    }
+                }
+            }
+
+            // return de lijst met namen
+            return festivals;
+        }
         public IActionResult Privacy()
         {
             return View();
