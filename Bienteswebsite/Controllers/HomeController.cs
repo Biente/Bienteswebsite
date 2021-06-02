@@ -61,8 +61,8 @@ namespace Bienteswebsite.Controllers
         [HttpPost]
         public IActionResult Contact(string firstname, string lastname, string email, string subject)
         {
-            ViewData["voornaam"] = voornaam;
-            ViewData["achternaam"] = achternaam;
+            ViewData["firstname"] = Person.firstname;
+            ViewData["lastname"] = Person.lastname;
 
             return View();
         }
