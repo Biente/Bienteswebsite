@@ -47,8 +47,8 @@ namespace Bienteswebsite.Controllers
         [Route("contact")]
         public IActionResult Contact(string firstname, string lastname, string email, string subject)
         {
-            ViewData["voornaam"] = voornaam;
-            ViewData["achternaam"] = achternaam;
+            ViewData["voornaam"] = firstname;
+            ViewData["achternaam"] = lastname;
             
             return View();
         }
@@ -58,13 +58,19 @@ namespace Bienteswebsite.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Contact(string firstname, string lastname, string email, string subject)
+        public IActionResult Succes()
         {
-            ViewData["firstname"] = Person.firstname;
-            ViewData["lastname"] = Person.lastname;
-
             return View();
+        }
+
+        [HttpPost]
+        [Route("contact")]
+        public IActionResult Contact(Person person)
+        {
+            if (ModelState.IsValid)
+                return Redirect("/succes");
+
+            return View(person);
         }
   
          
