@@ -15,6 +15,7 @@ namespace Bienteswebsite.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly string connectionString = "Server=172.16.160.21;Port=3306;Database=fastfood;Uid=lgg;Pwd=smurf;";
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -70,12 +71,28 @@ namespace Bienteswebsite.Controllers
         public IActionResult Contact(Person person)
         {
             if (ModelState.IsValid)
+            {
+                // alle benodigde gegevens zijn aanwezig, we kunnen opslaan!
+                SavePerson(person);
                 return Redirect("/succes");
-
+            }
             return View(person);
         }
-  
-         
+
+        private void SavePerson(Person person)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO klant(voornaam, achternaam, email, bericht) VALUES(?voornaam, ?achternaam, ?email, ?bericht)", conn);
+
+                cmd.Parameters.Add("?voornaam", MySqlDbType.Text).Value = person.firstname;
+                cmd.Parameters.Add("?achternaam", MySqlDbType.Text).Value = person.lastname;
+                cmd.Parameters.Add("?email", MySqlDbType.Text).Value = person.email;
+                cmd.Parameters.Add("?bericht", MySqlDbType.Text).Value = person.subject;
+                cmd.ExecuteNonQuery();
+            }
+        }
         public IActionResult Index()
         {
             var names = GetNames();
