@@ -46,13 +46,14 @@ body, input, button {
     width: 400px;
     min-height: 400px;
     margin: 2% auto 0 auto;
-    .heading
 
+
+.heading
 {
     text-align: center;
     margin-top: 1%;
     h2
-
+}
 {
     font-size: 3em;
     font-weight: 300;
