@@ -29,13 +29,11 @@ namespace Bienteswebsite.Controllers
             return View();
         }
 
-        [Route("festival/{id}")]
-        public IActionResult Festival(string id)
+        [Route("festival/{naam}")]
+        public IActionResult Festival(string naam)
         {
-            ViewData["id"] = id;
-            return View();
-            var model = GetFestival(id);
-            return View(model);
+            ViewData["naam"] = naam;
+            var model = GetFestival(naam);return View();
         }
 
         private Festival GetFestival(string id)
@@ -55,7 +53,11 @@ namespace Bienteswebsite.Controllers
                         {
                             Id = Convert.ToInt32(reader["Id"]),
                             Naam = reader["Naam"].ToString(),
-                            Beschrijving = reader["Beschrijving"].ToString()
+                            Beschrijving = reader["Beschrijving"].ToString(),
+                            Prijs = reader["Prijs"].ToString(),
+                            Leeftijd = reader["Leeftijd"].ToString(),
+                            Locatie = reader["Locatie"].ToString()
+                            
                         };
                         festivals.Add(p);
                     }
