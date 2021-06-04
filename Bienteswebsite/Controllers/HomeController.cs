@@ -71,6 +71,12 @@ namespace Bienteswebsite.Controllers
             return View();
         }
 
+        [Route("login")]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
         [Route("faq")]
         public IActionResult FAQ()
         {
