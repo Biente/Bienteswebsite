@@ -198,8 +198,9 @@ namespace Bienteswebsite.Controllers
                         {
                             Id = Convert.ToInt32(reader["Id"]),
                             Naam = reader["Naam"].ToString(),
-                            Beschrijving = reader["Beschrijving"].ToString(),
-                            Prijs = reader["Prijs"].ToString()
+                            Prijs = reader["Prijs"].ToString(),
+                            Locatie = reader["Locatie"].ToString(),
+                            Logo = reader["Logo"].ToString(),
                         };
                         festivals.Add(f);
                     }
