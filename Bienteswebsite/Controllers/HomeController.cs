@@ -8,14 +8,15 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
-using Bienteswebsite.Controllers.Database;
+using Bienteswebsite.Database;
 
 namespace Bienteswebsite.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly string connectionString = "Server=172.16.160.21;Port=3306;Database=fastfood;Uid=lgg;Pwd=smurf;";
+        // stel in waar de database gevonden kan worden
+        string connectionString = "Server=172.16.160.21;Port=3306;Database=110417;Uid=110417;Pwd=inf2021sql;";        
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -44,7 +45,7 @@ namespace Bienteswebsite.Controllers
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from product where id = {id}", conn);
+                MySqlCommand cmd = new MySqlCommand("select * from product where id = {id}", conn);             
 
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -63,6 +64,7 @@ namespace Bienteswebsite.Controllers
             return festivals[0];
         }
 
+
         [Route("regels")]
         public IActionResult Regels()
         {
@@ -78,7 +80,8 @@ namespace Bienteswebsite.Controllers
         [Route("info")]
         public IActionResult Info()
         {
-            return View();
+            var festivals = GetFestivals();
+            return View(festivals);
         }
 
         [Route("contact")]
@@ -136,8 +139,6 @@ namespace Bienteswebsite.Controllers
 
         public List<string> GetNames()
         {
-            // stel in waar de database gevonden kan worden
-            string connectionString = "Server=172.16.160.21;Port=3306;Database=110417;Uid=110417;Pwd=inf2021sql;";
 
             // maak een lege lijst waar we de namen in gaan opslaan
             List<string> names = new List<string>();
@@ -170,10 +171,9 @@ namespace Bienteswebsite.Controllers
             return names;
         }
 
-        public List<Festival> GetProducts()
+        public List<Festival> GetFestivals()
         {
-            // stel in waar de database gevonden kan worden
-            string connectionString = "Server=172.16.160.21;Port=3306;Database=110417;Uid=110417;Pwd=inf2021sql;";
+           
 
             // maak een lege lijst waar we de namen in gaan opslaan
             List<Festival> festivals = new List<Festival>();
@@ -194,11 +194,13 @@ namespace Bienteswebsite.Controllers
                     while (reader.Read())
                     {
                         // selecteer de kolommen die je wil lezen. In dit geval kiezen we de kolom "naam"
-                        //string festival = reader["festival"].ToString();
-                        Festival f = new Festival();
-                        //f.Id = 
-
-                        // voeg de naam toe aan de lijst met namen
+                        Festival f = new Festival
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Naam = reader["Naam"].ToString(),
+                            Beschrijving = reader["Beschrijving"].ToString(),
+                            Prijs = reader["Prijs"].ToString()
+                        };
                         festivals.Add(f);
                     }
                 }

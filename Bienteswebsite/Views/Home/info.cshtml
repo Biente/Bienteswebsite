@@ -1,11 +1,16 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@model SchoolTemplate.Database.Festival
+﻿@using Bienteswebsite.Database
+@model List<Festival>
 @{
     ViewData["Title"] = "Festival";
 }
 <h2>Info</h2>
-<h1>@Model.Naam</h1>
-"<h3>@ViewData["id"]</h3>"
-<p>@Model.Beschrijving</p>
+
+<div class="festivals">
+    @foreach (Festival fiets in Model)
+    {
+        <div class="festival">
+            <p>@fiets.Naam</p>
+            <price>@fiets.Prijs</price>
+        </div>
+    }
+</div>

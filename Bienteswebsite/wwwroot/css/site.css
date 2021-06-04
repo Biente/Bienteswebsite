@@ -50,10 +50,6 @@ a {
     padding: 8px;
 }
 
-p {
-    position: absolute;
-}
-
 
 footer {
     background-color: aqua;
@@ -91,4 +87,14 @@ input[type=text]focus {
 
 .contactForm textarea {
   width: 100%;
+}
+
+.festivals{
+    display:flex;
+}
+
+.festival {
+    background-color: #ababab;   
+    margin-right: 10px;
+    padding: 20px;
 }

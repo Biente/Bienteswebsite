@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Bienteswebsite.Controllers.Database
+namespace Bienteswebsite.Database
 {
     public class Festival
     {
@@ -11,5 +11,6 @@ namespace Bienteswebsite.Controllers.Database
         public string Naam { get; set; }
         public string Prijs { get; set; }
         public string Beschikbaarheid { get; set; }
+        public string Beschrijving { get; set; }
     }
 }
