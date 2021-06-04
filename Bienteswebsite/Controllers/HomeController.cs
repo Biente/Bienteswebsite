@@ -28,6 +28,41 @@ namespace Bienteswebsite.Controllers
             return View();
         }
 
+        [Route("festival/{id}")]
+        public IActionResult Festival(string id)
+        {
+            ViewData["id"] = id;
+            return View();
+            var model = GetFestival(id);
+            return View(model);
+        }
+
+        private Festival GetFestival(string id)
+        {
+            List<Festival> festivals = new List<Festival>();
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from product where id = {id}", conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Festival p = new Festival
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Naam = reader["Naam"].ToString(),
+                            Beschrijving = reader["Beschrijving"].ToString()
+                        };
+                        festivals.Add(p);
+                    }
+                }
+            }
+            return festivals[0];
+        }
+
         [Route("regels")]
         public IActionResult Regels()
         {
