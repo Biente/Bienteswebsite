@@ -12,5 +12,8 @@ namespace Bienteswebsite.Database
         public string Prijs { get; set; }
         public string Beschikbaarheid { get; set; }
         public string Beschrijving { get; set; }
+        public string Locatie { get; set; }
+        public string Logo { get; set; }
+
     }
 }
