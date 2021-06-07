@@ -1,12 +1,12 @@
 ﻿header {
-    background-image: url(https://i-mom.unimedias.fr/2020/09/16/funko_pop_figurines_soignants_covid19_4_1.png?auto=format%2Ccompress&crop=faces&cs=tinysrgb&fit=max&w=1050);
+    background-image: url(https://miro.medium.com/max/5600/1*wjfSFGr3OzwP4I6nQ12EvQ.png);
+    padding: 10px;
 }
 
     #header ul {
         list-style: none;
         padding: 0;
         margin: 0;
-        background: white;
         float: left;
         width: 100%;
     }
@@ -51,7 +51,7 @@ a {
 }
 
 footer {
-    background-color: aqua;
+    
 }
 
 input[type=text] {
@@ -107,4 +107,8 @@ img {
     height: 10vh;
     float: left;
     border-radius: 20px;
+}
+
+if (!env.IsDevelopment()) {
+    app .UseExceptionHandler("/error/500");
 }

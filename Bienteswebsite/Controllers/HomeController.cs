@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using Bienteswebsite.Database;
+using Microsoft.AspNetCore.Diagnostics;
 
 namespace Bienteswebsite.Controllers
 {
@@ -228,5 +229,44 @@ namespace Bienteswebsite.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+    }
+}
+
+
+
+[Route("error")]
+public class ErrorController : Controller
+{
+    private readonly TelemetryClient _telemetryClient;
+
+    public ErrorController(TelemetryClient telemetryClient)
+    {
+        _telemetryClient = telemetryClient;
+    }
+
+    [Route("500")]
+    public IActionResult AppError()
+    {
+        var exceptionHandlerPathFeature = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+        _telemetryClient.TrackException(exceptionHandlerPathFeature.Error);
+        _telemetryClient.TrackEvent("Error.ServerError", new Dictionary<string, string>
+        {
+            ["originalPath"] = exceptionHandlerPathFeature.Path,
+            ["error"] = exceptionHandlerPathFeature.Error.Message
+        });
+        return View();
+    }
+}
+
+public class TelemetryClient
+{
+    internal void TrackEvent(string v, Dictionary<string, string> dictionaries)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal void TrackException(Exception error)
+    {
+        throw new NotImplementedException();
     }
 }
