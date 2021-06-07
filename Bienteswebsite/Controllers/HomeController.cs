@@ -149,6 +149,7 @@ namespace Bienteswebsite.Controllers
                 SavePerson(person);
                 return Redirect("/succes");
             }
+           
             return View(person);
         }
 
@@ -156,14 +157,16 @@ namespace Bienteswebsite.Controllers
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                person.password = ComputeSha256Hash(person.password);
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand("INSERT INTO klant(voornaam, achternaam, email, bericht) VALUES(?voornaam, ?achternaam, ?email, ?bericht)", conn);
+                if(person.password != null)
+                    person.password = ComputeSha256Hash(person.password);
 
-                cmd.Parameters.Add("?voornaam", MySqlDbType.Text).Value = person.firstname;
-                cmd.Parameters.Add("?achternaam", MySqlDbType.Text).Value = person.lastname;
-                cmd.Parameters.Add("?wachtwoord", MySqlDbType.Text).Value = person.password;
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO festivalklant(naam, email, telefoonnummer, bericht) VALUES(?naam, ?email, ?telefoonnummer, ?bericht)", conn);
+
+                cmd.Parameters.Add("?naam", MySqlDbType.Text).Value = person.firstname+" "+person.lastname;
+                //cmd.Parameters.Add("?wachtwoord", MySqlDbType.Text).Value = person.password;
                 cmd.Parameters.Add("?email", MySqlDbType.Text).Value = person.email;
+                cmd.Parameters.Add("?telefoonnummer", MySqlDbType.Text).Value = person.telefoonnummer;
                 cmd.Parameters.Add("?bericht", MySqlDbType.Text).Value = person.subject;
                 cmd.ExecuteNonQuery();
             }

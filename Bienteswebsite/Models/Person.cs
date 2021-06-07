@@ -14,6 +14,9 @@ namespace Bienteswebsite.Models
         [EmailAddress(ErrorMessage = "Gelieve uw wachtwoord invullen")]
         public string email { get; set; }
         [Required(ErrorMessage = "Bericht is een verplicht veld")]
-        public string subject { get; set;
+        public string telefoonnummer { get; set; }
+        [Required(ErrorMessage = "Telefoonnummer graag invullen")]
+        public string subject { get; set; }
+    }
 
 }
