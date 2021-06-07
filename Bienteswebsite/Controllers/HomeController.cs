@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using Bienteswebsite.Database;
+using Microsoft.AspNetCore.Http;
 
 namespace Bienteswebsite.Controllers
 {
@@ -79,6 +80,19 @@ namespace Bienteswebsite.Controllers
             return View();
         }
 
+        [Route("login")]
+        [HttpPost]
+        public IActionResult Login(string username, string password)
+        {
+            if (password == "geheim")
+            {
+                HttpContext.Session.SetString("User", username);
+                return Redirect("/");
+            }
+            return View();
+        }
+            
+
         [Route("faq")]
         public IActionResult FAQ()
         {
@@ -141,6 +155,7 @@ namespace Bienteswebsite.Controllers
         }
         public IActionResult Index()
         {
+            ViewData["user"] = HttpContext.Session.GetString("User");
             var names = GetNames();
             return View(names);
         }
