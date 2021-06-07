@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using Bienteswebsite.Database;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Diagnostics;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Bienteswebsite.Controllers
 {
@@ -84,10 +87,20 @@ namespace Bienteswebsite.Controllers
         [HttpPost]
         public IActionResult Login(string username, string password)
         {
-            if (password == "geheim")
+            // hash voor "wachtwoord"
+            string hash = "dc00c903852bb19eb250aeba05e534a6d211629d77d055033806b783bae09937";
+
+            // is er een wachtwoord ingevoerd?
+            if (!string.IsNullOrWhiteSpace(password))
             {
-                HttpContext.Session.SetString("User", username);
-                return Redirect("/");
+
+                //Er is iets ingevoerd, nu kunnen we het wachtwoord hashen en vergelijken met de hash "uit de database"
+                string hashVanIngevoerdWachtwoord = ComputeSha256Hash(password);
+                if (hashVanIngevoerdWachtwoord == hash)
+                {
+                    HttpContext.Session.SetString("User", username);
+                    return Redirect("/");
+                }
             }
             return View();
         }
@@ -143,11 +156,13 @@ namespace Bienteswebsite.Controllers
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
+                person.password = ComputeSha256Hash(person.password);
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("INSERT INTO klant(voornaam, achternaam, email, bericht) VALUES(?voornaam, ?achternaam, ?email, ?bericht)", conn);
 
                 cmd.Parameters.Add("?voornaam", MySqlDbType.Text).Value = person.firstname;
                 cmd.Parameters.Add("?achternaam", MySqlDbType.Text).Value = person.lastname;
+                cmd.Parameters.Add("?wachtwoord", MySqlDbType.Text).Value = person.password;
                 cmd.Parameters.Add("?email", MySqlDbType.Text).Value = person.email;
                 cmd.Parameters.Add("?bericht", MySqlDbType.Text).Value = person.subject;
                 cmd.ExecuteNonQuery();
@@ -242,6 +257,23 @@ namespace Bienteswebsite.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        static string ComputeSha256Hash(string rawData)
+        {
+            // Create a SHA256   
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                // ComputeHash - returns byte array  
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
+
+                // Convert byte array to a string   
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
         }
     }
 }
