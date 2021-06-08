@@ -33,11 +33,12 @@ namespace Bienteswebsite.Controllers
             return View();
         }
 
-        [Route("festival/{naam}")]
-        public IActionResult Festival(string naam)
+        [Route("festival/{id}")]
+        public IActionResult Festival(string id)
         {
-            ViewData["naam"] = naam;
-            var model = GetFestival(naam);return View();
+            ViewData["id"] = id;
+            var model = GetFestival(id);
+            return View();
         }
 
         private Festival GetFestival(string id)
