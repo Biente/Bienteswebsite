@@ -3,11 +3,11 @@
         border: 1px solid #c2c2c;
     }
 
-    div.gallery img {
-        width: 100%;
-        height: 250px;
-        margin: 15px;
-    }
+div.gallery img {
+    width: 100%;
+    height: auto;
+    margin: 15px;
+}
 
 div.desc {
     padding: 15px;
