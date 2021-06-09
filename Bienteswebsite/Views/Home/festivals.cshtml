@@ -8,10 +8,9 @@
 <div class="festivals">
     @foreach (Festival fiets in Model)
     {
-        <div class="festival">
-            <a href="https://localhost:44367/festival/@fiets.Id"><img src="@fiets.Logo" /></a>
-            <p><a href="https://localhost:44367/festival/@fiets.Id">@fiets.Naam</a></p>
-            
-</div>
+    <div class="festival">
+        <a href="https://localhost:44367/festival/@fiets.Id"><img src="@fiets.Logo" /></a>
+        <p><a href="https://localhost:44367/festival/@fiets.Id">@fiets.Naam</a></p>
+    </div>
     }
 </div>

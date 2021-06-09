@@ -57,12 +57,15 @@ namespace Bienteswebsite.Controllers
                         Festival p = new Festival
                         {
                             Id = Convert.ToInt32(reader["Id"]),
-                            Naam = reader["Naam"].ToString(),
+                            Foto = reader["Foto"].ToString(),
+                            Logo = reader["Logo"].ToString(),
                             Beschrijving = reader["Beschrijving"].ToString(),
                             Prijs = reader["Prijs"].ToString(),
                             Leeftijd = reader["Leeftijd"].ToString(),
-                            Locatie = reader["Locatie"].ToString()
-                            
+                            Locatie = reader["Locatie"].ToString(),
+                            Begintijd = reader["Begintijd"].ToString(),
+                            Eindtijd = reader["Eindtijd"].ToString()
+
                         };
                         festivals.Add(p);
                     }

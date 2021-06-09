@@ -16,5 +16,8 @@ namespace Bienteswebsite.Database
         public string Logo { get; set; }
         public string Leeftijd { get; set; }
         public string Foto { get; set; }
+        public string Begintijd { get; set; }
+        public string Eindtijd { get; set; }
+
     }
 }
