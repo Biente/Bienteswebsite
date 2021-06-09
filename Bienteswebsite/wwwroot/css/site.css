@@ -1,1 +1,114 @@
-﻿
+﻿header {
+    background-image: url(https://miro.medium.com/max/5600/1*wjfSFGr3OzwP4I6nQ12EvQ.png);
+    padding: 10px;
+}
+
+    #header ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        float: left;
+        width: 100%;
+    }
+
+    #header li {
+        float: left;
+        margin: 0 1em 0 0;
+    }
+
+    #header a {
+        text-decoration: none;
+        display: block;
+        width: 6em;
+        padding: 0 0.5em;
+        font-weight: bold;
+        color: black;
+    }
+
+h1 {
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+    overflow: hidden;
+}
+
+li {
+    float: left;
+    background-color: lightcyan;
+    border-right: solid 2px #fff;
+    width: 100px; 
+}
+
+
+
+a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 8px;
+}
+
+footer {
+    
+}
+
+input[type=text] {
+    width: 100%;
+    float: left;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+input[type=text]focus {
+    border-color: black;
+}
+
+.container {
+    box-sizing: block;
+    padding: 0 16px;
+}
+
+
+.column {
+    float: left;
+    width: 50%;
+    margin-bottom: 16px;
+    padding: 0 8px;
+}
+
+.contactForm label{
+  display:block;
+}
+
+
+.contactForm textarea {
+  width: 100%;
+}
+
+.festivals {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.festival {
+    background-color: #ffebf4;
+    margin-right: 10px;
+    padding: 20px;
+    width: 300px;
+    margin-bottom: 20px;
+}
+
+img {
+    width: auto;
+    height: 10vh;
+    float: left;
+    border-radius: 20px;
+}
+
+if (!env.IsDevelopment()) {
+    app .UseExceptionHandler("/error/500");
+}

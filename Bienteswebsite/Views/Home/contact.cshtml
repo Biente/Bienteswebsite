@@ -1,0 +1,31 @@
+@model Bienteswebsite.Models.Person
+@{ 
+    ViewData["Title"] = "Contact";
+}
+
+<html>
+<head>
+    <p>Op pagina kunt U een formulier invullen. Dit formulier zullen wij ontvangen en wij zullen zo spoedig mogelijk contact met U opnemen.</p>
+</head> 
+</html>
+        <div class="container contactForm">
+            <form method="post">
+
+                <label for="firstname">Voornaam:</label>
+                <input type="text" id="firstname" name="firstname" placeholder="Uw voornaam">
+                @Html.ValidationMessageFor(m => m.firstname)
+                <label for="lastname">Achternaam:</label>
+                <input type="text" id="lastname" name="lastname" placeholder="Uw achternaam">
+                @Html.ValidationMessageFor(m => m.lastname)
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" placeholder="Uw email">
+                @Html.ValidationMessageFor(m => m.email)
+                <label for="subject">Opmerkingen:</label>
+                <textarea id="subject" name="subject" placeholder="Uw opmerking"></textarea>
+
+                <input type="submit" value="Verzenden">
+
+            </form>
+        </div>
+
+
