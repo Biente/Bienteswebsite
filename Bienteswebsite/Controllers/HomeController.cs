@@ -113,8 +113,8 @@ namespace Bienteswebsite.Controllers
             return View();
         }
 
-        [Route("info")]
-        public IActionResult Info()
+        [Route("festivals")]
+        public IActionResult Festivals()
         {
             var festivals = GetFestivals();
             return View(festivals);
