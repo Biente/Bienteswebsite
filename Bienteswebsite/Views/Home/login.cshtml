@@ -8,23 +8,37 @@
     <link rel="stylesheet" href="/css/login.css">
 </head>
 <h1>Login</h1>
+<div class="container">
+    <form action="/action_page.php">
+        <div class="row">
+            <div class="vl">
+                <span class="vl-innertext">or</span>
+            </div>
 
-    <div class="login">
-        <div class="heading">
-            <h2>Sign in</h2>
-            <form action="#" method="post">
+            <div class="col">
+                <a href="#" class="fb btn">
+                    <i class="fa fa-facebook fa-fw"></i> Login with Facebook
+                </a>
+                <a href="#" class="twitter btn">
+                    <i class="fa fa-twitter fa-fw"></i> Login with Twitter
+                </a>
+                <a href="#" class="google btn">
+                    <i class="fa fa-google fa-fw">
+                    </i> Login with Google+
+                </a>
+            </div>
 
-                <div class="input-group input-group-lg">
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                    <input name="username" type="text" class="form-control" placeholder="Username or email">
+            <div class="col">
+                <div class="hide-md-lg">
+                    <p>Or sign in manually:</p>
                 </div>
 
-                <div class="input-group input-group-lg">
-                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                    <input name ="password" type="password" class="form-control" placeholder="Password">
-                </div>
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="submit" value="Login">
+            </div>
 
-                <button type="submit" class="float">Login</button>
-            </form>
         </div>
-    </div>
+    </form>
+</div>
+

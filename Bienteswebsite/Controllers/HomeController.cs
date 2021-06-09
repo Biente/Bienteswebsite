@@ -167,13 +167,13 @@ namespace Bienteswebsite.Controllers
                     person.password = ComputeSha256Hash(person.password);
 
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("INSERT INTO festivalklant(naam, email, telefoonnummer, bericht) VALUES(?naam, ?email, ?telefoonnummer, ?bericht)", conn);
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO festivalklant(naam, email, telefoonnummer, subject) VALUES(?naam, ?email, ?telefoonnummer, ?subject)", conn);
 
                 cmd.Parameters.Add("?naam", MySqlDbType.Text).Value = person.firstname+" "+person.lastname;
                 //cmd.Parameters.Add("?wachtwoord", MySqlDbType.Text).Value = person.password;
                 cmd.Parameters.Add("?email", MySqlDbType.Text).Value = person.email;
                 cmd.Parameters.Add("?telefoonnummer", MySqlDbType.Text).Value = person.telefoonnummer;
-                cmd.Parameters.Add("?bericht", MySqlDbType.Text).Value = person.subject;
+                cmd.Parameters.Add("?subject", MySqlDbType.Text).Value = person.subject;
                 cmd.ExecuteNonQuery();
             }
         }
