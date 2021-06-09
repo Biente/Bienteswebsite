@@ -17,7 +17,6 @@ namespace Bienteswebsite.Database
         public string Foto { get; set; }
         public string Begintijd { get; set; }
         public string Eindtijd { get; set; }
-
         public string Subject { get; set; }
     }
 }
