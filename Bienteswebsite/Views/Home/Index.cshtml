@@ -20,9 +20,8 @@
 
 @foreach (Festival f in Model)
 {
-    <div class="responsive" style="background-image:url(@f.Logo)">
-        <div class="gallery">          
-                @*<img src="https://hockeyloverz.nl/wp-content/uploads/2019/11/IMAGE-2019-11-12-134426.jpg" alt="Hockeyloverz" width="600" height="400">*@
+    <div class="responsive" style="background-image:url(@f.Foto)">
+        <div class="gallery">    
           
             <a href="/festival/@f.Id" class="desc">@f.Naam</a>
         </div>

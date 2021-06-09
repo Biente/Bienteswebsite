@@ -9,6 +9,14 @@ div.gallery img {
     margin: 15px;
 }
 
+.gallery {
+    background-color: #ffffffb3;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 0
+}
+
 div.desc {
     padding: 15px;
     text-align: center;
@@ -16,9 +24,14 @@ div.desc {
 }
 
 .responsive {
+    position: relative;
     padding: 0 6px;
     float: left;
-    width: 24.99999%;
+    width: 48.99999%;
+    height: 144px;
+    background-position: center center;
+    background-size: cover;
+    margin: 5px;
 }
 
 @media only screen and (max-width: 700px) {

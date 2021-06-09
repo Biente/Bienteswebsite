@@ -245,6 +245,7 @@ namespace Bienteswebsite.Controllers
                             Prijs = reader["Prijs"].ToString(),
                             Locatie = reader["Locatie"].ToString(),
                             Logo = reader["Logo"].ToString(),
+                            Foto = reader["Foto"].ToString(),
                         };
                         festivals.Add(f);
                     }
