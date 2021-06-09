@@ -38,7 +38,7 @@ namespace Bienteswebsite.Controllers
         {
             ViewData["id"] = id;
             var model = GetFestival(id);
-            return View();
+            return View(model);
         }
 
         private Festival GetFestival(string id)
@@ -48,7 +48,7 @@ namespace Bienteswebsite.Controllers
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from product where id = {id}", conn);             
+                MySqlCommand cmd = new MySqlCommand($"select * from festival where id = {id}", conn);             
 
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -175,8 +175,8 @@ namespace Bienteswebsite.Controllers
         public IActionResult Index()
         {
             ViewData["user"] = HttpContext.Session.GetString("User");
-            var names = GetNames();
-            return View(names);
+            var festivals = GetFestivals();
+            return View(festivals);
         }
 
         public List<string> GetNames()
