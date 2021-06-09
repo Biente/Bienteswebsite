@@ -123,10 +123,10 @@ namespace Bienteswebsite.Controllers
         [Route("contact")]
         public IActionResult Contact(string firstname, string lastname, string email, string subject)
         {
-            ViewData["voornaam"] = firstname;
-            ViewData["achternaam"] = lastname;
+            ViewData["firstname"] = firstname;
+            ViewData["lastname"] = lastname;
             ViewData["email"] = email;
-            ViewData["opmerkingen"] = subject;
+            ViewData["subject"] = subject;
             
             return View();
         }
