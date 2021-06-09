@@ -125,6 +125,8 @@ namespace Bienteswebsite.Controllers
         {
             ViewData["voornaam"] = firstname;
             ViewData["achternaam"] = lastname;
+            ViewData["email"] = email;
+            ViewData["opmerkingen"] = subject;
             
             return View();
         }
