@@ -3,20 +3,29 @@
     ViewData["Title"] = "Festival";
 }
 
-<h2>@Model.Naam</h2>
+<h2>@Model.Naam </h2> <img src="@Model.Logo" />
 <p>@Model.Beschrijving</p>
-<p>De minimale leeftijd: @Model.Leeftijd</p>
-<p>Locatie: @Model.Locatie</p>
-<p>Prijs: €@Model.Prijs</p>
-<p>Begintijd: @Model.Begintijd</p>
-<p>Eindtijd: @Model.Eindtijd</p>
-<img src="@Model.Logo"/>
-<img src="@Model.Foto"/>
 
-<ul>
-    <li><a href="/bestelpagina">Bestellen</a></li>
-</ul>
-   
+<div class="column">
+    <div class="card">
+        <div class="container">
+            <p>De minimale leeftijd: @Model.Leeftijd</p>
+            <p>Locatie: @Model.Locatie</p>
+            <p>Prijs: €@Model.Prijs</p>
+            <p>Begintijd: @Model.Begintijd</p>
+            <p>Eindtijd: @Model.Eindtijd</p>
+        </div>
+    </div>
+</div>
+<div class="column">
+            <img src="@Model.Foto" />
+</div>
+
+
+            <ul>
+                <li><a href="/bestelpagina">Bestellen</a></li>
+            </ul>
+
 
 
 

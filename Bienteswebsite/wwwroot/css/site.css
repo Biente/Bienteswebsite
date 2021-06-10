@@ -113,3 +113,7 @@ img {
 if (!env.IsDevelopment()) {
     app .UseExceptionHandler("/error/500");
 }
+
+festival.img {
+    height: 100vh;
+}
