@@ -1,0 +1,13 @@
+﻿.bestelknop {
+    background: #036 url(../plaatjes/bestelpijltje.jpg) no-repeat left center;
+    color: #FFF;
+    padding-left: 1em;
+    font-weight: bold;
+}
+
+.bestelknophover {
+    background: #FFF url(../plaatjes/bestelpijltje-neg.jpg) no-repeat center left;
+    color: #003;
+    padding-left: 1em;
+    font-weight: bold;
+}
