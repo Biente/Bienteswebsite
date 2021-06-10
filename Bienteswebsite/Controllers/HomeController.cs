@@ -14,10 +14,6 @@ using Microsoft.AspNetCore.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 
-private string connectionString;
-
-string connectionString { get; private set; }
-
 namespace Bienteswebsite.Controllers
 {
     public class HomeController : Controller
@@ -49,6 +45,18 @@ namespace Bienteswebsite.Controllers
             return View();
         }
 
+        [Route("Signup")]
+        [HttpPost]
+        public IActionResult Signup(Person p)
+        {
+            if (ModelState.IsValid)
+            {
+                // alle benodigde gegevens zijn aanwezig, we kunnen opslaan!
+                SavePerson(p);
+                return Redirect("/succes");
+            }
+            return View();
+        }
 
         [Route("festival/{id}")]
         public IActionResult Festival(string id)
@@ -114,7 +122,7 @@ namespace Bienteswebsite.Controllers
                 HttpContext.Session.SetString("User", username);
                 return Redirect("/");
             }
-            return View()
+            return View();
         }
 
 
@@ -160,13 +168,30 @@ namespace Bienteswebsite.Controllers
             if (ModelState.IsValid)
             {
                 // alle benodigde gegevens zijn aanwezig, we kunnen opslaan!
-                |Savebericht(contactform);
+                Savebericht(contactform);
                 return Redirect("/succes");
             }
            
             return View(contactform);
         }
 
+        private void SavePerson(Person person)
+        {
+            person.password = ComputeSha256Hash(person.password);
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO festivalklant(naam, email, telefoonnummer, password) VALUES(?naam, ?email, ?telefoonnummer, ?password)", conn);
+
+                cmd.Parameters.Add("?naam", MySqlDbType.Text).Value = person.firstname + " " + person.lastname;
+                cmd.Parameters.Add("?password", MySqlDbType.Text).Value = person.password;
+                cmd.Parameters.Add("?email", MySqlDbType.Text).Value = person.email;
+                cmd.Parameters.Add("?telefoonnummer", MySqlDbType.Text).Value = person.telefoonnummer;
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+     
         private void Savebericht(Contactform contactform)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
