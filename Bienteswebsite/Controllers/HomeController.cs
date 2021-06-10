@@ -14,6 +14,10 @@ using Microsoft.AspNetCore.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 
+private string connectionString;
+
+string connectionString { get; private set; }
+
 namespace Bienteswebsite.Controllers
 {
     public class HomeController : Controller
@@ -105,25 +109,14 @@ namespace Bienteswebsite.Controllers
         [HttpPost]
         public IActionResult Login(string username, string password)
         {
-            // hash voor "wachtwoord"
-            string hash = "dc00c903852bb19eb250aeba05e534a6d211629d77d055033806b783bae09937";
-
-            // is er een wachtwoord ingevoerd?
-            if (!string.IsNullOrWhiteSpace(password))
+            if (password == "geheim")
             {
-
-                //Er is iets ingevoerd, nu kunnen we het wachtwoord hashen en vergelijken met de hash "uit de database"
-                string hashVanIngevoerdWachtwoord = ComputeSha256Hash(password);
-                if (hashVanIngevoerdWachtwoord == hash)
-                {
-                    HttpContext.Session.SetString("User", username);
-                    return Redirect("/");
-                }
+                HttpContext.Session.SetString("User", username);
+                return Redirect("/");
             }
-            return View();
+            return View()
         }
 
-            
 
         [Route("faq")]
         public IActionResult FAQ()
@@ -162,19 +155,33 @@ namespace Bienteswebsite.Controllers
 
         [HttpPost]
         [Route("contact")]
-        public IActionResult Contact(Person person)
+        public IActionResult Contact(Contactform contactform)
         {
             if (ModelState.IsValid)
             {
                 // alle benodigde gegevens zijn aanwezig, we kunnen opslaan!
-                SavePerson(person);
+                |Savebericht(contactform);
                 return Redirect("/succes");
             }
            
-            return View(person);
+            return View(contactform);
         }
 
-     
+        private void Savebericht(Contactform contactform)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO contactform(naam, email, telefoonnummer, subject) VALUES(?naam, ?email, ?telefoonnummer, ?subject)", conn);
+
+                cmd.Parameters.Add("?naam", MySqlDbType.Text).Value = contactform.Firstname+" "+contactform.Lastname;
+                //cmd.Parameters.Add("?wachtwoord", MySqlDbType.Text).Value = person.password;
+                cmd.Parameters.Add("?email", MySqlDbType.Text).Value = contactform.Email;
+                cmd.Parameters.Add("?telefoonnummer", MySqlDbType.Text).Value = contactform.Telefoonnummer;
+                cmd.Parameters.Add("?subject", MySqlDbType.Text).Value = contactform.Subject;
+                cmd.ExecuteNonQuery();
+            }
+        }
         public IActionResult Index()
         {
             ViewData["user"] = HttpContext.Session.GetString("User");

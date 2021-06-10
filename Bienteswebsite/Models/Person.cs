@@ -11,7 +11,7 @@ namespace Bienteswebsite.Models
         public string lastname { get; set; }
         [EmailAddress(ErrorMessage = "Emailadres is verplicht")]
         public string password { get; set; }
-        [EmailAddress(ErrorMessage = "Gelieve uw wachtwoord invullen")]
+        [Required(ErrorMessage = "Gelieve uw wachtwoord invullen")]
         public string email { get; set; }
         [Required(ErrorMessage = "Bericht is een verplicht veld")]
         public string telefoonnummer { get; set; }
