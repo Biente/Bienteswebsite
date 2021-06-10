@@ -39,6 +39,12 @@ namespace Bienteswebsite.Controllers
             return View();
         }
 
+        [Route("Signup")]
+        public IActionResult Signup()
+        {
+            return View();
+        }
+
 
         [Route("festival/{id}")]
         public IActionResult Festival(string id)
@@ -65,6 +71,7 @@ namespace Bienteswebsite.Controllers
                         {
                             Id = Convert.ToInt32(reader["Id"]),
                             Foto = reader["Foto"].ToString(),
+                            Naam = reader["naam"].ToString(),
                             Logo = reader["Logo"].ToString(),
                             Beschrijving = reader["Beschrijving"].ToString(),
                             Prijs = reader["Prijs"].ToString(),
@@ -115,6 +122,7 @@ namespace Bienteswebsite.Controllers
             }
             return View();
         }
+
             
 
         [Route("faq")]
@@ -166,24 +174,7 @@ namespace Bienteswebsite.Controllers
             return View(person);
         }
 
-        private void SavePerson(Person person)
-        {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                if(person.password != null)
-                    person.password = ComputeSha256Hash(person.password);
-
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand("INSERT INTO festivalklant(naam, email, telefoonnummer, subject) VALUES(?naam, ?email, ?telefoonnummer, ?subject)", conn);
-
-                cmd.Parameters.Add("?naam", MySqlDbType.Text).Value = person.firstname+" "+person.lastname;
-                //cmd.Parameters.Add("?wachtwoord", MySqlDbType.Text).Value = person.password;
-                cmd.Parameters.Add("?email", MySqlDbType.Text).Value = person.email;
-                cmd.Parameters.Add("?telefoonnummer", MySqlDbType.Text).Value = person.telefoonnummer;
-                cmd.Parameters.Add("?subject", MySqlDbType.Text).Value = person.subject;
-                cmd.ExecuteNonQuery();
-            }
-        }
+     
         public IActionResult Index()
         {
             ViewData["user"] = HttpContext.Session.GetString("User");
