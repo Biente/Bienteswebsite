@@ -33,13 +33,38 @@ namespace Bienteswebsite.Controllers
         {
             return View();
         }
+        
+        [Route("bestelpagina")]
+        public IActionResult Bestelpagina()
+        {
+            return View();
+        }
+
+        [Route("Signup")]
+        public IActionResult Signup()
+        {
+            return View();
+        }
+
+        [Route("Signup")]
+        [HttpPost]
+        public IActionResult Signup(Person p)
+        {
+            if (ModelState.IsValid)
+            {
+                // alle benodigde gegevens zijn aanwezig, we kunnen opslaan!
+                SavePerson(p);
+                return Redirect("/succes");
+            }
+            return View();
+        }
 
         [Route("festival/{id}")]
         public IActionResult Festival(string id)
         {
             ViewData["id"] = id;
             var model = GetFestival(id);
-            return View();
+            return View(model);
         }
 
         private Festival GetFestival(string id)
@@ -49,7 +74,7 @@ namespace Bienteswebsite.Controllers
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from product where id = {id}", conn);             
+                MySqlCommand cmd = new MySqlCommand($"select * from festival where id = {id}", conn);             
 
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -58,12 +83,16 @@ namespace Bienteswebsite.Controllers
                         Festival p = new Festival
                         {
                             Id = Convert.ToInt32(reader["Id"]),
-                            Naam = reader["Naam"].ToString(),
+                            Foto = reader["Foto"].ToString(),
+                            Naam = reader["naam"].ToString(),
+                            Logo = reader["Logo"].ToString(),
                             Beschrijving = reader["Beschrijving"].ToString(),
                             Prijs = reader["Prijs"].ToString(),
                             Leeftijd = reader["Leeftijd"].ToString(),
-                            Locatie = reader["Locatie"].ToString()
-                            
+                            Locatie = reader["Locatie"].ToString(),
+                            Begintijd = reader["Begintijd"].ToString(),
+                            Eindtijd = reader["Eindtijd"].ToString()
+
                         };
                         festivals.Add(p);
                     }
@@ -89,24 +118,14 @@ namespace Bienteswebsite.Controllers
         [HttpPost]
         public IActionResult Login(string username, string password)
         {
-            // hash voor "wachtwoord"
-            string hash = "dc00c903852bb19eb250aeba05e534a6d211629d77d055033806b783bae09937";
-
-            // is er een wachtwoord ingevoerd?
-            if (!string.IsNullOrWhiteSpace(password))
+            if (password == "geheim")
             {
-
-                //Er is iets ingevoerd, nu kunnen we het wachtwoord hashen en vergelijken met de hash "uit de database"
-                string hashVanIngevoerdWachtwoord = ComputeSha256Hash(password);
-                if (hashVanIngevoerdWachtwoord == hash)
-                {
-                    HttpContext.Session.SetString("User", username);
-                    return Redirect("/");
-                }
+                HttpContext.Session.SetString("User", username);
+                return Redirect("/");
             }
             return View();
         }
-            
+
 
         [Route("faq")]
         public IActionResult FAQ()
@@ -114,8 +133,8 @@ namespace Bienteswebsite.Controllers
             return View();
         }
 
-        [Route("info")]
-        public IActionResult Info()
+        [Route("festivals")]
+        public IActionResult Festivals()
         {
             var festivals = GetFestivals();
             return View(festivals);
@@ -126,6 +145,8 @@ namespace Bienteswebsite.Controllers
         {
             ViewData["voornaam"] = firstname;
             ViewData["achternaam"] = lastname;
+            ViewData["email"] = email;
+            ViewData["opmerkingen"] = subject;
             
             return View();
         }
@@ -143,41 +164,55 @@ namespace Bienteswebsite.Controllers
 
         [HttpPost]
         [Route("contact")]
-        public IActionResult Contact(Person person)
+        public IActionResult Contact(Contactform contactform)
         {
             if (ModelState.IsValid)
             {
                 // alle benodigde gegevens zijn aanwezig, we kunnen opslaan!
-                SavePerson(person);
+                Savebericht(contactform);
                 return Redirect("/succes");
             }
            
-            return View(person);
+            return View(contactform);
         }
 
         private void SavePerson(Person person)
         {
+            person.password = ComputeSha256Hash(person.password);
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                if(person.password != null)
-                    person.password = ComputeSha256Hash(person.password);
-
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("INSERT INTO festivalklant(naam, email, telefoonnummer, bericht) VALUES(?naam, ?email, ?telefoonnummer, ?bericht)", conn);
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO festivalklant(naam, email, telefoonnummer, password) VALUES(?naam, ?email, ?telefoonnummer, ?password)", conn);
 
-                cmd.Parameters.Add("?naam", MySqlDbType.Text).Value = person.firstname+" "+person.lastname;
-                //cmd.Parameters.Add("?wachtwoord", MySqlDbType.Text).Value = person.password;
+                cmd.Parameters.Add("?naam", MySqlDbType.Text).Value = person.firstname + " " + person.lastname;
+                cmd.Parameters.Add("?password", MySqlDbType.Text).Value = person.password;
                 cmd.Parameters.Add("?email", MySqlDbType.Text).Value = person.email;
                 cmd.Parameters.Add("?telefoonnummer", MySqlDbType.Text).Value = person.telefoonnummer;
-                cmd.Parameters.Add("?bericht", MySqlDbType.Text).Value = person.subject;
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+     
+        private void Savebericht(Contactform contactform)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO contactform(naam, email, telefoonnummer, subject) VALUES(?naam, ?email, ?telefoonnummer, ?subject)", conn);
+
+                cmd.Parameters.Add("?naam", MySqlDbType.Text).Value = contactform.Firstname+" "+contactform.Lastname;
+                //cmd.Parameters.Add("?wachtwoord", MySqlDbType.Text).Value = person.password;
+                cmd.Parameters.Add("?email", MySqlDbType.Text).Value = contactform.Email;
+                cmd.Parameters.Add("?telefoonnummer", MySqlDbType.Text).Value = contactform.Telefoonnummer;
+                cmd.Parameters.Add("?subject", MySqlDbType.Text).Value = contactform.Subject;
                 cmd.ExecuteNonQuery();
             }
         }
         public IActionResult Index()
         {
             ViewData["user"] = HttpContext.Session.GetString("User");
-            var names = GetNames();
-            return View(names);
+            var festivals = GetFestivals();
+            return View(festivals);
         }
 
         public List<string> GetNames()
@@ -244,6 +279,7 @@ namespace Bienteswebsite.Controllers
                             Prijs = reader["Prijs"].ToString(),
                             Locatie = reader["Locatie"].ToString(),
                             Logo = reader["Logo"].ToString(),
+                            Foto = reader["Foto"].ToString(),
                         };
                         festivals.Add(f);
                     }

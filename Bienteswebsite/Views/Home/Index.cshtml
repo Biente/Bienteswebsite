@@ -1,15 +1,12 @@
-﻿@model List<String>
+﻿@using Bienteswebsite.Database
+@model List<Festival>
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<head>
-    <link rel="stylesheet" href="~/css/index.css">
-</head>
-
 
 <div class="header">
-    <id =”nav”>
+    <id =”nav”></id>
 </div>
 
 <div class="footer">
@@ -17,79 +14,18 @@
 </div>
 
 <p>
-    Welkom op de website van M&M Beach Festivals! Hier kunt U alle leuke festivals vinden die aankomende periode plaats zullen vinden.
-    Heeft u vragen of wilt U contact met ons opnemen ga dan naar de contact pagina en vul de gegevens in. 
+    Welkom op de website van M&B Beach Festivals! Hier kunt U alle leuke festivals vinden die aankomende periode plaats zullen vinden.
+    Heeft u vragen of wilt U contact met ons opnemen ga dan naar de contact pagina en vul de gegevens in.
 </p>
 
-
-<body>
-    <div class="responsive">
-        <div class="gallery">
-            <a target="_blank" href="https://hockeyloverz.nl/wp-content/uploads/2019/11/IMAGE-2019-11-12-134426.jpg">
-                <img src="https://hockeyloverz.nl/wp-content/uploads/2019/11/IMAGE-2019-11-12-134426.jpg" alt="Hockeyloverz" width="600" height="400">
-            </a>
-            <div class="desc">Hockeyloverz</div>
+@foreach (Festival f in Model)
+{
+    <div class="responsive" style="background-image:url(@f.Foto)">
+        <div class="gallery">    
+          
+            <a href="/festival/@f.Id" class="desc">@f.Naam</a>
         </div>
     </div>
+}
 
-
-    <div class="responsive">
-        <div class="gallery">
-            <a target="_blank" href="https://cdn.festival.travel/files/gt_1/2020-10-29/gallery-ex6.jpg">
-                <img src="https://cdn.festival.travel/files/gt_1/2020-10-29/gallery-ex6.jpg" alt="Juliana Pop" width="600" height="400">
-            </a>
-            <div class="desc">Juliana Pop</div>
-        </div>
-    </div>
-
-    <div class="responsive">
-        <div class="gallery">
-            <a target="_blank" href="ihttps://www.alkmaarsdagblad.nl/image/23071_27349_1200_1200.jpg">
-                <img src="https://www.alkmaarsdagblad.nl/image/23071_27349_1200_1200.jpg" alt="Indian Summer Festival" width="600" height="400">
-            </a>
-            <div class="desc">Indian Summer Festival</div>
-        </div>
-    </div>
-
-    <div class="responsive">
-        <div class="gallery">
-            <a target="_blank" href="https://wantijpop.nl/wp-content/uploads/2019/05/Wantijpop-Wouter-134-5-1680x1120.jpg">
-                <img src="https://wantijpop.nl/wp-content/uploads/2019/05/Wantijpop-Wouter-134-5-1680x1120.jpg" alt="Wantijpop" width="600" height="400">
-            </a>
-            <div class="desc">WantijPop</div>
-        </div>
-    </div>
-
-    <div class="responsive">
-        <div class="gallery">
-            <a target="_blank" href="https://www.touslesfestivals.com/caches/54bfa8b9e6dc17b494d729e6ab9bf404371742d2-1040x540-outbound.jpg">
-                <img src="https://www.touslesfestivals.com/caches/54bfa8b9e6dc17b494d729e6ab9bf404371742d2-1040x540-outbound.jpg" alt="Bearegard" width="600" height="400">
-            </a>
-            <div class="desc">Beauregard Festival</div>
-        </div>
-    </div>
-
-    <div class="responsive">
-        <div class="gallery">
-            <a target="_blank" href="https://edmidentity.com/wp-content/uploads/2018/10/Luminosity-Beach-Festival-2018.jpg">
-                <img src="https://edmidentity.com/wp-content/uploads/2018/10/Luminosity-Beach-Festival-2018.jpg" alt="Luminosity Beach Festival" width="600" height="400">
-            </a>
-            <div class="desc">Luminosity Beach Festival</div>
-        </div>
-    </div>
-
-    <div class="responsive">
-        <div class="gallery">
-            <a target="_blank" href="https://f.eu1.jwwb.nl/public/p/q/q/temp-coxfmcjuyaezlorwuvbx/6a2a06bf-9231-43eb-8f8c-579ddd4c1ba6.jpg">
-                <img src="https://f.eu1.jwwb.nl/public/p/q/q/temp-coxfmcjuyaezlorwuvbx/6a2a06bf-9231-43eb-8f8c-579ddd4c1ba6.jpg" alt="Lowlands" width="600" height="400">
-            </a>
-            <div class="desc">Lowlands</div>
-        </div>
-    </div>
-
-    <div class="clearfix"></div>
-
-
-
-</body>
-
+<div class="clearfix"></div>

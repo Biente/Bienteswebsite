@@ -2,10 +2,10 @@
 @{ 
     ViewData["Title"] = "Contact";
 }
-
+<h2>Contact</h2>
 <html>
 <head>
-    <p>Op pagina kunt U een formulier invullen. Dit formulier zullen wij ontvangen en wij zullen zo spoedig mogelijk contact met U opnemen.</p>
+    <p>Op deze pagina kunt U een formulier invullen. Dit formulier zullen wij ontvangen en wij zullen zo spoedig mogelijk contact met U opnemen.</p>
 </head> 
 </html>
         <div class="container contactForm">
@@ -20,6 +20,9 @@
                 <label for="email">Email:</label>
                 <input type="text" id="email" name="email" placeholder="Uw email">
                 @Html.ValidationMessageFor(m => m.email)
+                <label for="email">Telefoonnummer:</label>
+                <input type="text" id="telefoonnummer" name="telefoonnummer" placeholder="Uw telefoonnummer">
+                @Html.ValidationMessageFor(m => m.telefoonnummer)
                 <label for="subject">Opmerkingen:</label>
                 <textarea id="subject" name="subject" placeholder="Uw opmerking"></textarea>
 
@@ -27,5 +30,7 @@
 
             </form>
         </div>
+
+
 
 
