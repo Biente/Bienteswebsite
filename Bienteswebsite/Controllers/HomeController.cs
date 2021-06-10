@@ -34,38 +34,9 @@ namespace Bienteswebsite.Controllers
         }
         
         [Route("bestelpagina")]
-        public IActionResult Bestelling(string firstname, string lastname, string email, string stad, string straat, string postcode, string telefoonnummer)
+        public IActionResult Bestelpagina()
         {
-            ViewData["voornaam"] = firstname;
-            ViewData["achternaam"] = lastname;
-            ViewData["email"] = email;
-            ViewData["stad"] = stad;
-            ViewData["straat"] = straat;
-            ViewData["postcode"] = postcode;
-            ViewData["telefoonnummer"] = telefoonnummer;
             return View();
-        }
-
-        private void SavePerson(Person person)
-        {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                if (person.password != null)
-                    person.password = ComputeSha256Hash(person.password);
-
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand("INSERT INTO festivalbestelling(voornaam, achternaam, email, stad, straat, postcode, telefoonnummer) VALUES(?voornaam, ?achternaam, ?email, ?stad, ?straat, ?postcode, ?telefoonnummer)", conn);
-
-                cmd.Parameters.Add("?voornaam", MySqlDbType.Text).Value = person.firstname;
-                //cmd.Parameters.Add("?wachtwoord", MySqlDbType.Text).Value = person.password;
-                cmd.Parameters.Add("?achernaam", MySqlDbType.Text).Value = person.lastname;
-                cmd.Parameters.Add("?email", MySqlDbType.Text).Value = person.email;
-                cmd.Parameters.Add("?stad", MySqlDbType.Text).Value = person.stad;
-                cmd.Parameters.Add("?straat", MySqlDbType.Text).Value = person.straat;
-                cmd.Parameters.Add("?postcode", MySqlDbType.Text).Value = person.postcode;
-                cmd.Parameters.Add("?telefoonnummer", MySqlDbType.Text).Value = person.telefoonnummer;
-                cmd.ExecuteNonQuery();
-            }
         }
 
 
