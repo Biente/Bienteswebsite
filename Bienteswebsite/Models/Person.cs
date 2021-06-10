@@ -17,6 +17,11 @@ namespace Bienteswebsite.Models
         public string telefoonnummer { get; set; }
         [Required(ErrorMessage = "Telefoonnummer graag invullen")]
         public string subject { get; set; }
+
+        public string stad { get; set; }
+        public string straat { get; set; }
+        public string postcode { get; set; }
+
     }
 
 }
