@@ -32,6 +32,13 @@ namespace Bienteswebsite.Controllers
         {
             return View();
         }
+        
+        [Route("bestelpagina")]
+        public IActionResult Bestelpagina()
+        {
+            return View();
+        }
+
 
         [Route("festival/{id}")]
         public IActionResult Festival(string id)
