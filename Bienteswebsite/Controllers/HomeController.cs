@@ -86,26 +86,51 @@ namespace Bienteswebsite.Controllers
 
         [Route("login")]
         [HttpPost]
-        public IActionResult Login(string username, string password)
+        public IActionResult Login(string email, string password)
         {
-            // hash voor "wachtwoord"
-            string hash = "dc00c903852bb19eb250aeba05e534a6d211629d77d055033806b783bae09937";
-
             // is er een wachtwoord ingevoerd?
             if (!string.IsNullOrWhiteSpace(password))
             {
+                Person festivalklant = GetPersonByEmail(Email);
 
                 //Er is iets ingevoerd, nu kunnen we het wachtwoord hashen en vergelijken met de hash "uit de database"
                 string hashVanIngevoerdWachtwoord = ComputeSha256Hash(password);
-                if (hashVanIngevoerdWachtwoord == hash)
+                if (hashVanIngevoerdWachtwoord == festivalklant.password)
                 {
-                    HttpContext.Session.SetString("User", username);
+                    HttpContext.Session.SetString("User", email);
                     return Redirect("/");
                 }
             }
             return View();
         }
-            
+        private festivalklant GetPersonByEmail(Email)
+        {
+            List<festivalklant> person = new List<festivalklant>();
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand($"select email from festivalklant", conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        festivalklant p = new festivalklant
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Naam = reader["Naam"].ToString(),
+                            Email = reader["Email"].ToString(),
+                            Password = reader["Password"].ToString(),
+
+                        };
+                        person.Add(p);
+                    }
+                }
+            }
+            return person[0];
+        }
+
 
         [Route("faq")]
         public IActionResult FAQ()
