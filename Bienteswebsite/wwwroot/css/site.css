@@ -30,6 +30,22 @@ h1 {
     color: white;
 }
 
+h2 {
+    padding-left: 50px;
+}
+
+p {
+    padding-left: 50px;
+}
+
+dd {
+    padding-left: 50px;
+}
+
+dt {
+    padding-left: 50px;
+} 
+
 ul {
     list-style-type: none;
     overflow: hidden;

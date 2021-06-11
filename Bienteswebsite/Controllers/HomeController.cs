@@ -130,7 +130,7 @@ namespace Bienteswebsite.Controllers
                     HttpContext.Session.SetString("Username", festivalklant.firstname);
                     HttpContext.Session.SetString("Userlastname", festivalklant.lastname);
                     HttpContext.Session.SetString("Useremail", festivalklant.email);
-                    return Redirect("/");
+                    return Redirect("/succeslogin");
                 }
                 
             }
@@ -205,21 +205,26 @@ namespace Bienteswebsite.Controllers
 
         [HttpPost]
         [Route("contact")]
-        public IActionResult Contact(Contactform contactform)
+        public IActionResult Contact(Person person)
         {
             if (ModelState.IsValid)
             {
                 // alle benodigde gegevens zijn aanwezig, we kunnen opslaan!
-                Savebericht(contactform);
-                return Redirect("/succes");
+                
+                SavePerson(person);
+                return Redirect("/succescontact");
             }
            
-            return View(contactform);
+            return View(person);
         }
 
         private void SavePerson(Person person)
         {
-            person.password = ComputeSha256Hash(person.password);
+            if (person.password != null)
+                person.password = ComputeSha256Hash(person.password);
+            else
+                person.password = "leeg";
+
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
@@ -239,9 +244,10 @@ namespace Bienteswebsite.Controllers
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("INSERT INTO contactform(naam, email, telefoonnummer, subject) VALUES(?naam, ?email, ?telefoonnummer, ?subject)", conn);
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO contactform(firstname, lastname, email, telefoonnummer, subject) VALUES(?firstname, ?lastname, ?email, ?telefoonnummer, ?subject)", conn);
 
-                cmd.Parameters.Add("?naam", MySqlDbType.Text).Value = contactform.Firstname+" "+contactform.Lastname;
+                cmd.Parameters.Add("?firstname", MySqlDbType.Text).Value = contactform.Firstname;
+                cmd.Parameters.Add("?lastname", MySqlDbType.Text).Value = contactform.Lastname;
                 //cmd.Parameters.Add("?wachtwoord", MySqlDbType.Text).Value = person.password;
                 cmd.Parameters.Add("?email", MySqlDbType.Text).Value = contactform.Email;
                 cmd.Parameters.Add("?telefoonnummer", MySqlDbType.Text).Value = contactform.Telefoonnummer;

@@ -10,8 +10,7 @@ namespace Bienteswebsite.Models
 
         [Required(ErrorMessage = "Achternaam is een verplicht veld")]
         public string lastname { get; set; }
-
-        [Required(ErrorMessage = "Wachtwoord is verplicht")]
+        
         public string password { get; set; }
 
         [EmailAddress(ErrorMessage = "Gelieve uw email invullen")]
