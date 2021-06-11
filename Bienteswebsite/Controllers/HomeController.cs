@@ -20,7 +20,8 @@ namespace Bienteswebsite.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         // stel in waar de database gevonden kan worden
-        string connectionString = "Server=172.16.160.21;Port=3306;Database=110417;Uid=110417;Pwd=inf2021sql;";        
+        //string connectionString = "Server=172.16.160.21;Port=3306;Database=110417;Uid=110417;Pwd=inf2021sql;";
+        string connectionString = "Server=informatica.st-maartenscollege.nl;Port=3306;Database=110417;Uid=110417;Pwd=inf2021sql;";
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -30,6 +31,31 @@ namespace Bienteswebsite.Controllers
         [Route("aboutus")]
         public IActionResult Aboutus()
         {
+            return View();
+        }
+        
+        [Route("bestelpagina")]
+        public IActionResult Bestelpagina()
+        {
+            return View();
+        }
+
+        [Route("Signup")]
+        public IActionResult Signup()
+        {
+            return View();
+        }
+
+        [Route("Signup")]
+        [HttpPost]
+        public IActionResult Signup(Person p)
+        {
+            if (ModelState.IsValid)
+            {
+                // alle benodigde gegevens zijn aanwezig, we kunnen opslaan!
+                SavePerson(p);
+                return Redirect("/succes");
+            }
             return View();
         }
 
@@ -57,12 +83,16 @@ namespace Bienteswebsite.Controllers
                         Festival p = new Festival
                         {
                             Id = Convert.ToInt32(reader["Id"]),
-                            Naam = reader["Naam"].ToString(),
+                            Foto = reader["Foto"].ToString(),
+                            Naam = reader["naam"].ToString(),
+                            Logo = reader["Logo"].ToString(),
                             Beschrijving = reader["Beschrijving"].ToString(),
                             Prijs = reader["Prijs"].ToString(),
                             Leeftijd = reader["Leeftijd"].ToString(),
-                            Locatie = reader["Locatie"].ToString()
-                            
+                            Locatie = reader["Locatie"].ToString(),
+                            Begintijd = reader["Begintijd"].ToString(),
+                            Eindtijd = reader["Eindtijd"].ToString()
+
                         };
                         festivals.Add(p);
                     }
@@ -138,8 +168,8 @@ namespace Bienteswebsite.Controllers
             return View();
         }
 
-        [Route("info")]
-        public IActionResult Info()
+        [Route("festivals")]
+        public IActionResult Festivals()
         {
             var festivals = GetFestivals();
             return View(festivals);
@@ -169,33 +199,47 @@ namespace Bienteswebsite.Controllers
 
         [HttpPost]
         [Route("contact")]
-        public IActionResult Contact(Person person)
+        public IActionResult Contact(Contactform contactform)
         {
             if (ModelState.IsValid)
             {
                 // alle benodigde gegevens zijn aanwezig, we kunnen opslaan!
-                SavePerson(person);
+                Savebericht(contactform);
                 return Redirect("/succes");
             }
            
-            return View(person);
+            return View(contactform);
         }
 
         private void SavePerson(Person person)
         {
+            person.password = ComputeSha256Hash(person.password);
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                if(person.password != null)
-                    person.password = ComputeSha256Hash(person.password);
-
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("INSERT INTO festivalklant(naam, email, telefoonnummer, bericht) VALUES(?naam, ?email, ?telefoonnummer, ?bericht)", conn);
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO festivalklant(naam, email, telefoonnummer, password) VALUES(?naam, ?email, ?telefoonnummer, ?password)", conn);
 
-                cmd.Parameters.Add("?naam", MySqlDbType.Text).Value = person.firstname+" "+person.lastname;
-                //cmd.Parameters.Add("?wachtwoord", MySqlDbType.Text).Value = person.password;
+                cmd.Parameters.Add("?naam", MySqlDbType.Text).Value = person.firstname + " " + person.lastname;
+                cmd.Parameters.Add("?password", MySqlDbType.Text).Value = person.password;
                 cmd.Parameters.Add("?email", MySqlDbType.Text).Value = person.email;
                 cmd.Parameters.Add("?telefoonnummer", MySqlDbType.Text).Value = person.telefoonnummer;
-                cmd.Parameters.Add("?bericht", MySqlDbType.Text).Value = person.subject;
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+     
+        private void Savebericht(Contactform contactform)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO contactform(naam, email, telefoonnummer, subject) VALUES(?naam, ?email, ?telefoonnummer, ?subject)", conn);
+
+                cmd.Parameters.Add("?naam", MySqlDbType.Text).Value = contactform.Firstname+" "+contactform.Lastname;
+                //cmd.Parameters.Add("?wachtwoord", MySqlDbType.Text).Value = person.password;
+                cmd.Parameters.Add("?email", MySqlDbType.Text).Value = contactform.Email;
+                cmd.Parameters.Add("?telefoonnummer", MySqlDbType.Text).Value = contactform.Telefoonnummer;
+                cmd.Parameters.Add("?subject", MySqlDbType.Text).Value = contactform.Subject;
                 cmd.ExecuteNonQuery();
             }
         }

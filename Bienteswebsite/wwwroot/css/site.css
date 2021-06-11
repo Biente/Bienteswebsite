@@ -27,6 +27,7 @@
 
 h1 {
     text-align: center;
+    color: white;
 }
 
 ul {
@@ -111,4 +112,8 @@ img {
 
 if (!env.IsDevelopment()) {
     app .UseExceptionHandler("/error/500");
+}
+
+festival.img {
+    height: 100vh;
 }

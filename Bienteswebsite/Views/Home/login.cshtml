@@ -5,26 +5,21 @@
 }
 
 <head>
-    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/index.css">
 </head>
-<h1>Login</h1>
+<h2>Login</h2>
+<div class="login-content">
 
-    <div class="login">
-        <div class="heading">
-            <h2>Sign in</h2>
-            <form action="#" method="post">
-
-                <div class="input-group input-group-lg">
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                    <input name="username" type="text" class="form-control" placeholder="Username or email">
-                </div>
-
-                <div class="input-group input-group-lg">
-                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                    <input name ="password" type="password" class="form-control" placeholder="Password">
-                </div>
-
-                <button type="submit" class="float">Login</button>
+    <h2 class="titel">@ViewData["Title"]</h2>
+    <div class="container contactForm">
+        <form method="post">
+            <form method="post">
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" placeholder="Uw email">
+                <label for="email">Wachtwoord:</label>
+                <input type="text" id="wachtwoord" name="wachtwoord" placeholder="Uw wachtwoord">
+                <div><input type="submit" value="Log in" /></div>
             </form>
-        </div>
+            <p><a class="account" href="https://localhost:44367/Signup">Klik hier om een account aan te maken.</a></p>
+        </form>
     </div>
