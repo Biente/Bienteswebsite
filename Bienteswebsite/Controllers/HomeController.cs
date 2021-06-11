@@ -20,8 +20,8 @@ namespace Bienteswebsite.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         // stel in waar de database gevonden kan worden
-        //string connectionString = "Server=172.16.160.21;Port=3306;Database=110417;Uid=110417;Pwd=inf2021sql;";
-        string connectionString = "Server=informatica.st-maartenscollege.nl;Port=3306;Database=110417;Uid=110417;Pwd=inf2021sql;";
+        string connectionString = "Server=172.16.160.21;Port=3306;Database=110417;Uid=110417;Pwd=inf2021sql;";
+        //string connectionString = "Server=informatica.st-maartenscollege.nl;Port=3306;Database=110417;Uid=110417;Pwd=inf2021sql;";
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -121,37 +121,41 @@ namespace Bienteswebsite.Controllers
             // is er een wachtwoord ingevoerd?
             if (!string.IsNullOrWhiteSpace(password))
             {
-                Person festivalklant = GetPersonByEmail(Email);
+                Person festivalklant = GetPersonByEmail(email);
 
                 //Er is iets ingevoerd, nu kunnen we het wachtwoord hashen en vergelijken met de hash "uit de database"
                 string hashVanIngevoerdWachtwoord = ComputeSha256Hash(password);
                 if (hashVanIngevoerdWachtwoord == festivalklant.password)
                 {
-                    HttpContext.Session.SetString("User", email);
+                    HttpContext.Session.SetString("Username", festivalklant.firstname);
+                    HttpContext.Session.SetString("Userlastname", festivalklant.lastname);
+                    HttpContext.Session.SetString("Useremail", festivalklant.email);
                     return Redirect("/");
                 }
+                
             }
             return View();
         }
-        private festivalklant GetPersonByEmail(Email)
+
+        
+        private Person GetPersonByEmail(string email)
         {
-            List<festivalklant> person = new List<festivalklant>();
+            List<Person> person = new List<Person>();
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand($"select email from festivalklant", conn);
+                MySqlCommand cmd = new MySqlCommand($"select * from festivalklant where email = {email}", conn);
 
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        festivalklant p = new festivalklant
+                        Person p = new Person
                         {
-                            Id = Convert.ToInt32(reader["Id"]),
-                            Naam = reader["Naam"].ToString(),
-                            Email = reader["Email"].ToString(),
-                            Password = reader["Password"].ToString(),
+                            firstname = reader["Naam"].ToString(),
+                            email = reader["Email"].ToString(),
+                            password = reader["Password"].ToString(),
 
                         };
                         person.Add(p);
@@ -160,6 +164,8 @@ namespace Bienteswebsite.Controllers
             }
             return person[0];
         }
+
+
 
 
         [Route("faq")]
